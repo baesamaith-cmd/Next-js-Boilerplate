@@ -1,7 +1,7 @@
 import type { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { Pool } from 'pg';
-import type * as schema from '@/models/Schema';
-import { createDbConnection } from '@/utils/DBConnection';
+import type * as schema from '@/entities/counter/model/Schema';
+import { createDbConnection } from '@/shared/lib/DBConnection';
 import { Env } from './Env';
 
 // Stores the db connection in the global scope to prevent multiple instances due to hot reloading with Next.js

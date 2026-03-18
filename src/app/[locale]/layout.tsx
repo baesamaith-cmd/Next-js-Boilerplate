@@ -2,10 +2,10 @@ import type { Metadata, Viewport } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { DemoBadge } from '@/components/DemoBadge';
-import { routing } from '@/libs/I18nRouting';
-import '@/styles/global.css';
+import { PostHogProvider } from '@/shared/ui/analytics/PostHogProvider';
+import { DemoBadge } from '@/shared/ui/DemoBadge';
+import { routing } from '@/shared/lib/I18nRouting';
+import '@/shared/styles/global.css';
 
 export const metadata: Metadata = {
   icons: [

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
-import { routing } from '@/libs/I18nRouting';
+import { routing } from '@/shared/lib/I18nRouting';
 
 type PortfolioDetailPageProps = {
   params: Promise<{ slug: string; locale: string }>;

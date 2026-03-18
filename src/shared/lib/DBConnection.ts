@@ -1,8 +1,8 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
-import { Env } from '@/libs/Env';
-import { logger } from '@/libs/Logger';
-import * as schema from '@/models/Schema';
+import { Env } from '@/shared/lib/Env';
+import { logger } from '@/shared/lib/Logger';
+import * as schema from '@/entities/counter/model/Schema';
 
 // Need a database for production? Check out https://www.prisma.io/?via=nextjsboilerplate
 // Tested and compatible with Next.js Boilerplate

@@ -57,12 +57,16 @@
     // ======================================================================
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/public/*": [
-        "./public/*"
-      ]
+      // ── FSD Layer Aliases ──────────────────────────────────────────────
+      // Use these for cross-layer imports (e.g. @shared/ui, @features/counter)
+      "@shared/*":   ["./src/shared/*"],
+      "@entities/*": ["./src/entities/*"],
+      "@features/*": ["./src/features/*"],
+      "@widgets/*":  ["./src/widgets/*"],
+      "@pages/*":    ["./src/pages/*"],
+      // ── Legacy / Generic Alias (keep for Next.js internals) ────────────
+      "@/*":         ["./src/*"],
+      "@/public/*":  ["./public/*"]
     },
     // ======================================================================
     // Next.js Project Configuration

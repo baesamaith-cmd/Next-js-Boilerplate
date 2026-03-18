@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Sponsors } from '@/components/Sponsors';
+import { Sponsors } from '@/shared/ui/Sponsors';
 
 type IndexPageProps = {
   params: Promise<{ locale: string }>;

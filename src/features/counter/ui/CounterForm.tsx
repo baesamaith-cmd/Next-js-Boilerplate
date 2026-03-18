@@ -3,8 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
-import { useRouter } from '@/libs/I18nNavigation';
-import { CounterValidation } from '@/validations/CounterValidation';
+import { useRouter } from '@/shared/lib/I18nNavigation';
+import { CounterValidation } from '@/features/counter/model/CounterValidation';
 
 export const CounterForm = () => {
   const t = useTranslations('CounterForm');

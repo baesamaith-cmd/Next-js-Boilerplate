@@ -1,5 +1,5 @@
-import type { routing } from '@/libs/I18nRouting';
-import type messages from '@/locales/en.json';
+import type { routing } from '@/shared/lib/I18nRouting';
+import type messages from '@/shared/locales/en.json';
 
 declare module 'next-intl' {
   // eslint-disable-next-line ts/consistent-type-definitions

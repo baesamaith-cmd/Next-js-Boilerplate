@@ -2,10 +2,10 @@ import { sql } from 'drizzle-orm';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import * as z from 'zod';
-import { db } from '@/libs/DB';
-import { logger } from '@/libs/Logger';
-import { counterSchema } from '@/models/Schema';
-import { CounterValidation } from '@/validations/CounterValidation';
+import { db } from '@/shared/lib/DB';
+import { logger } from '@/shared/lib/Logger';
+import { counterSchema } from '@/entities/counter/model/Schema';
+import { CounterValidation } from '@/features/counter/model/CounterValidation';
 
 export const PUT = async (request: Request) => {
   const json = await request.json();
