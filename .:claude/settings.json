@@ -1,0 +1,158 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_TEAMMATE_MODE": "tmux"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git pull:*)",
+      "Bash(git fetch:*)",
+      "Bash(npm run:*)",
+      "Bash(npm test:*)",
+      "Bash(npm install:*)",
+      "Bash(yarn:*)",
+      "Bash(pnpm:*)",
+      "Bash(npx:*)",
+      "Bash(ls:*)",
+      "Bash(pwd:*)",
+      "Bash(which:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh issue:*)",
+      "Bash(tsc:*)",
+      "Bash(eslint:*)",
+      "Bash(prettier:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip:*)",
+      "Bash(pip3:*)",
+      "Bash(uv:*)",
+      "Bash(uvicorn:*)",
+      "Bash(pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(mypy:*)",
+      "Bash(gemini:*)",
+      "mcp__tavily__*",
+      "mcp__exa__*",
+      "mcp__context7__*"
+    ],
+    "deny": [
+      "WebSearch",
+      "WebFetch"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git push * main*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'BLOCKED: main 브랜치에 직접 push 금지. feature 브랜치를 사용하세요.' && exit 1"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git push * master*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'BLOCKED: master 브랜치에 직접 push 금지. feature 브랜치를 사용하세요.' && exit 1"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git push --force*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'BLOCKED: force push 금지. 사용자에게 확인을 요청하세요.' && exit 1"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'if [ -f PRD.md ]; then echo \"PRD.md 생성 완료\"; fi; exit 0'",
+            "statusMessage": "서브에이전트 완료 확인 중..."
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/verify-task-quality.sh",
+            "timeout": 120,
+            "statusMessage": "품질 게이트 검증 중..."
+          }
+        ]
+      }
+    ],
+    "TeammateIdle": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/check-remaining-tasks.sh",
+            "statusMessage": "남은 태스크 확인 중..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATH\" | grep -qE '\\.(ts|tsx|js|jsx)$'; then if command -v prettier &>/dev/null; then prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null; fi; fi; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if echo \"$CLAUDE_FILE_PATH\" | grep -qE '\\.(ts|tsx|js|jsx)$'; then if command -v prettier &>/dev/null; then prettier --write \"$CLAUDE_FILE_PATH\" 2>/dev/null; fi; fi; exit 0"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'STAGED=$(git diff --cached --name-only); if echo \"$STAGED\" | grep -qE \"\\.env\"; then echo \"BLOCKED: .env 파일 커밋 금지\" && exit 1; fi; if git diff --cached | grep -qiE \"(console\\.log|console\\.warn|console\\.debug)\"; then echo \"WARNING: console.log가 포함되어 있습니다. 제거하세요.\" && exit 1; fi; exit 0'"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "mgrep@Mixedbread-Grep": true
+  },
+  "extraKnownMarketplaces": {
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
+      }
+    }
+  },
+  "language": "한국어",
+  "skipDangerousModePermissionPrompt": true
+}
